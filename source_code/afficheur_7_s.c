@@ -11,15 +11,15 @@
 
 #include "../source_header/afficheur_7_s.h"
 
-void startTaskAfficheur(const void* args) {
-	SPI_HandleTypeDef* argument = (SPI_HandleTypeDef*) args;
-	SPI_HandleTypeDef handle_spi = argument[0];
+void startTaskAfficheur(const void* argument) {
+	uint32_t* pargs = (uint32_t*) argument;
+	SPI_HandleTypeDef* phandle_spi = (SPI_HandleTypeDef*) pargs[0];
 	uint8_t data[16] = {A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, AA, AB, AC, AD, AE, AF};
 	int i;
 
 	for(;;) {
 		for (i = 0; i < 16; i++) {
-			shiftOut(data + i, 1, &handle_spi);
+			shiftOut(data + i, 1, phandle_spi);
 			osDelay(500);
 		}
 	}
